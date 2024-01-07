@@ -10,6 +10,6 @@ Step 3: Run > the print out on Console
 and HL801284.014 has the correct content
 
 To do list:
-1. $claim_file_name: the 2nd character is A-L to represant 12 month of the year (based on $DOS)
+1. $claim_file_name: the 2nd character is A-L to represant 12 month of the year (based on $DOS)  - done
 2. To have an input to initialize $Accounting_Number
-3. sequence number need to increment upwards, if last file is HL801284.014, then next file is HL801284.015, until the month changes which would impact second letter.
+3. sequence number need to increment upwards, if last file is HL801284.014, then next file is HL801284.015, until the month changes which would impact second letter. - done

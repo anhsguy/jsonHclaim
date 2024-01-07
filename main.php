@@ -1,21 +1,33 @@
 <?php
-echo "Hello, world!\n";
+// echo "Hello, world!\n";
 echo "Version of PHP: " . PHP_VERSION . "\n";
 // Include the external.php file
 include 'external.php';
 include 'batch_record.php';
 
-// Check if the file is not empty
-if (filesize($claim_file_name) > 0) {
-    // Empty the file by writing an empty string
-    file_put_contents($claim_file_name, '');
+// Get the current month
+$currentMonth = date('M');
 
-    // Output success message
-    echo 'File emptied.';
-} else {
-    // Output a message if the file is already empty
-    echo 'File is already empty.';
-}
+// Get the corresponding letter for the current month
+$letterForCurrentMonth = getLetterForMonth($currentMonth);
+
+// // Output the result
+// echo "For the month of $currentMonth, the corresponding letter is $letterForCurrentMonth\n";
+// Decode the JSON object
+$data = json_decode($jsonObject, true);
+// Get the length of the array
+$arrayLength = count($data);
+echo "\n$arrayLength claims\n";
+// create claim file name
+$newExtension=sequential_number();
+// Create the new file name with the incremented extension
+$sequential_number = sprintf("%03d", $newExtension);
+$assigned_number = '801284';
+$specialty_code = '56';
+$claim_file_name = 'H' . $letterForCurrentMonth . $assigned_number . '.' . $sequential_number;
+$DOS = str_replace('-', '', $data[0]['DOS']);
+
+file_put_contents($claim_file_name, '');
 
 $newline = batch_header($sequential_number, $assigned_number, $specialty_code,$DOS);
 

@@ -14,14 +14,57 @@ $jsonObject = '[
     {"Name": "Ibrahim Aliwi", "HealthCard": "1434762926", "VC": "JB", "DOB": "1977-04-25", "Service": "V451", "AMT": "48.00", "DOS": "2023-12-09", "DIAG": "374"}
 ]';
 
-// Decode the JSON object
-$data = json_decode($jsonObject, true);
-// Get the length of the array
-$arrayLength = count($data);
-echo "\n$arrayLength claims\n";
-// create claim file name
-$sequential_number = '014';
-$assigned_number = '801284';
-$specialty_code = '56';
-$claim_file_name = 'H' . 'L' . $assigned_number . '.' . $sequential_number;
-$DOS = str_replace('-', '', $data[0]['DOS']);
+
+function getLetterForMonth($month) {
+    // Create an array with month names as keys and letters as values
+    $letterArray = [
+        'Jan' => 'A',
+        'Feb' => 'B',
+        'Mar' => 'C',
+        'Apr' => 'D',
+        'May' => 'E',
+        'Jun' => 'F',
+        'Jul' => 'G',
+        'Aug' => 'H',
+        'Sep' => 'I',
+        'Oct' => 'J',
+        'Nov' => 'K',
+        'Dec' => 'L',
+    ];
+
+    // Get the value for the specified month
+    $month = ucfirst(strtolower($month)); // Convert month to uppercase first letter
+    $letter = $letterArray[$month] ?? null;
+
+    return $letter;
+}
+function sequential_number() {
+
+  // Get the list of files in the current folder
+  $files = glob('*');
+
+  // Define the pattern to match files (H followed by any character, '801284', and a dot followed by numbers)
+  $pattern = '/^H[A-L]801284\.(\d+)$/';
+
+  // Initialize the maxExtension variable to track the maximum extension
+  $maxExtension = 0;
+
+  // Iterate through the files
+  foreach ($files as $file) {
+      // Check if the file matches the pattern
+      if (preg_match($pattern, $file, $matches)) {
+          $currentExtension = (int)$matches[1];
+
+          // Update maxExtension if the current extension is higher
+          $maxExtension = max($maxExtension, $currentExtension);
+      }
+  }
+
+  // Increment the highest extension by 1
+  $newExtension = $maxExtension + 1;
+  return $newExtension;
+}
+
+
+
+
